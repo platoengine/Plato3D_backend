@@ -8,11 +8,6 @@ Clone the repo, then 'npm install', and 'nodemon app.js'
 
 ### Prerequisites
 
-This service uses third party applications for analysis, post processing, etc:
-
-* Meshlab: www.meshlab.net (on ubuntu: sudo apt-get install meshlab)
-* obj2gltf: https://github.com/AnalyticalGraphicsInc/obj2gltf (npm install -g obj2gltf)
-
 To configure a virtual machine on Google Compute Platform:
 
 * Create a VM on GCP using Ubuntu 18.04, 50 Gb of drive space, and as many vCPUs as you like.
@@ -21,7 +16,6 @@ To configure a virtual machine on Google Compute Platform:
   * sudo apt-get upgrade
   * sudo apt-get install build-essential curl git gfortran python python-dev vim tcl environment-modules unzip csh ubuntu-drivers-common
 * Install node
-  * curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
   * curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
   * (exit and open a new shell)
   * nvm install 14.1.0
