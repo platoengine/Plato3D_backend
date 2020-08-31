@@ -11,7 +11,7 @@ router.post('/', function(req, res) {
     exeArgs = [payload.inputFileName];
   } else
   if (payload.hostCode === 'Analyze') {
-    exeName = 'lgr';
+    exeName = 'analyze';
     exeArgs = ['--input-config=' + payload.inputFileName];
   } else {
     console.log('Unknown host code requested: ' + payload.hostCode);
