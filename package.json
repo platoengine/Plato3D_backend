@@ -26,6 +26,7 @@
     "jsonwebtoken": "^8.4.0",
     "mongodb": "^3.5.8",
     "mongoose": "^5.9.16",
+    "nodemon": "^2.0.6",
     "now": "^12.1.11",
     "npm-check": "^5.9.2",
     "opn": "^5.4.0",
