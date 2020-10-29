@@ -5,6 +5,7 @@ services:
     container_name: "backend"
     volumes:
       - ".:/usr/src/app"
+      - "/usr/src/app/node_modules"
     ports:
       - "3000:3000"
     depends_on:
@@ -14,6 +15,7 @@ services:
     container_name: "modeler"
     volumes:
       - "../Plato3D:/usr/src/app"
+      - "/usr/src/app/node_modules"
     ports:
       - "8080:8080"
   mongo:
