@@ -149,10 +149,16 @@ def extractBlock(mesh, iBlock, gMap):
   for p0 in gMap:
     for p1 in gMap[p0]:
       for p2 in gMap[p0][p1]:
-        if len(gMap[p0][p1][p2]) == 1:
-          face = gMap[p0][p1][p2][0]
-          if face[0] != iBlock:
-            face = gmap[p0][p1][p2][1]
+        searchFaces = gMap[p0][p1][p2]
+        face = []
+        if len(searchFaces) == 1 and searchFaces[0][0] == iBlock:  ## surface face
+          face = searchFaces[0]
+        if len(searchFaces) == 2 and searchFaces[0][0] != searchFaces[1][0]:  ## boundary face
+          if searchFaces[0][0] == iBlock:
+            face = searchFaces[0] 
+          elif searchFaces[1][0] == iBlock:
+            face = searchFaces[1]
+        if len(face) != 0:
           iElem = face[1]
           iFace = face[2]
           elemConn = block.Connectivity(iElem)
