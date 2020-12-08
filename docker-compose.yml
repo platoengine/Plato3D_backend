@@ -1,0 +1,25 @@
+version: "3.3"
+services:
+  backend:
+    build: .
+    container_name: "backend"
+    volumes:
+      - ".:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+  modeler:
+    build: "../Plato3D"
+    container_name: "modeler"
+    volumes:
+      - "../Plato3D:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    ports:
+      - "8080:8080"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+
