@@ -1,13 +1,13 @@
-const ScenePrimitivesModel = require('../../models/ScenePrimitives');
+const ProjectDataModel = require('../../models/ProjectData');
 const router = require('express').Router();
 const getUserTime = require('../../helpers/getUserTime');
 
 router.post('/', function(req, res) {
-  const {body: {username, sceneData, dateCreated, projectName}} = req;
-  const updateduserproject = new ScenePrimitivesModel({
+  const {body: {username, projectData, dateCreated, projectName}} = req;
+  const updateduserproject = new ProjectDataModel({
     username,
     projectName,
-    sceneData,
+    projectData,
     dateCreated,
     LastModified: getUserTime(),
   });

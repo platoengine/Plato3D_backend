@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 
-const ScenePrimitivesSchema = new Schema({
+const ProjectDataSchema = new Schema({
   userid: String,
   // Schema.Types.Mixed is used because the scene dat
   // in the form of an array hashmap
@@ -10,18 +10,18 @@ const ScenePrimitivesSchema = new Schema({
   // its flexibility comes
   // at a trade-off of it being harder to maintain
   projectname: {type: String},
-  SceneHashmap: {type: Schema.Types.Mixed},
+  projectdata: {type: Schema.Types.Mixed},
   DateCreated: {type: Date, default: Date.now},
   LastModified: {type: Date},
 });
-ScenePrimitivesSchema
+ProjectDataSchema
     .methods
     .isProjectNameUnique = function(candidateProject, cb) {
-      return this.model('ScenePrimitivesModule')
+      return this.model('ProjectDataModule')
           .countDocuments(
               {username: this.username, projectname: candidateProject},
               cb
           );
     };
 // export this module so Node can use it anywhere it wants
-module.exports = mongoose.model('ScenePrimitivesModule', ScenePrimitivesSchema);
+module.exports = mongoose.model('ProjectDataModule', ProjectDataSchema);
