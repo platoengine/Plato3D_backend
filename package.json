@@ -5,7 +5,7 @@
   "author": "joshnotlori@gmail.com",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon --ignore 'calculations/' app.js",
     "now-build": "npm run build",
     "test": "jest",
     "lint": "eslint . --ext .js",
