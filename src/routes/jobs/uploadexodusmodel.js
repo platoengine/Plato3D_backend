@@ -69,7 +69,7 @@ router.post('/', function(req, res) {
                     remoteName: exoFileName,
                     remotePath: `${runDir}/`,
                     data: data}, eventName);
-                }
+                },
             );
           }
         });

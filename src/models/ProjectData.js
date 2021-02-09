@@ -20,7 +20,7 @@ ProjectDataSchema
       return this.model('ProjectDataModule')
           .countDocuments(
               {username: this.username, projectname: candidateProject},
-              cb
+              cb,
           );
     };
 // export this module so Node can use it anywhere it wants
