@@ -51,6 +51,8 @@ router.post('/', function(req, res) {
             optimizationName: optimizationName,
             iteration: iteration,
             data: fileData}, eventName);
+          //this block is expected to run after optimization completes
+          //TODO: Make sure that's the case
           if (current == latest) {
             //  reads directory content
             const dirCont = fs.readdirSync( runDir );
