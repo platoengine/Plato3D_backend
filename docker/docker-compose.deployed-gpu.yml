@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+  backend:
+    image: plato3d/plato-backend-cc-7.5
+    tty: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    privileged: true
+    runtime: nvidia
+    environment:
+      - OMPI_ALLOW_RUN_AS_ROOT=1
+      - OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    ipc: 'host'
+    stdin_open: true
+  modeler:
+    image: plato3d/plato-frontend
+    ports:
+      - "8080:80"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

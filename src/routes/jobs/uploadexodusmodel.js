@@ -33,8 +33,6 @@ router.post('/', function(req, res) {
       inputFilePath = `${baseFilePath}.exo`;
     }
 
-    console.log(`command: ${command}`);
-
     fs.writeFile(inputFilePath, req.files.file.data, 'utf-8', function(err) {
       if (err) {
         res.status(200).send('FAILURE');
@@ -49,23 +47,31 @@ router.post('/', function(req, res) {
 
         const convert = spawn(command, {shell: true, cwd: runDir});
 
+        // exo2obj writes the following info:
+        // $~> {'block','sideset','nodeset'}:{id}:{path}
+        // below parses this info and sends it back
         const eventName = 'modelGeometryData';
         convert.stdout.on('data', (data) => {
           strData = `${data}`;
           entries = strData.split('\n').filter( (e) => e !== '' );
           typeArray = entries.map( (e) => e.split(':')[0] );
-          dataArray = entries.map( (e) => e.split(':')[1] );
+          idArray = entries.map( (e) => e.split(':')[1] );
+          dataArray = entries.map( (e) => e.split(':')[2] );
           for (iData=0; iData<entries.length; iData++) {
             const thisIndex = iData;
-            fs.readFile( `${runDir}/${dataArray[iData]}`, 'utf-8',
+            const thisType = typeArray[thisIndex];
+            const thisID = idArray[thisIndex];
+            const thisName = dataArray[thisIndex];
+            fs.readFile( `${runDir}/${dataArray[thisIndex]}`, 'utf-8',
                 function(err, data) {
                   if (err) {
                     console.log(`read error: ${err}`);
                   }
                   sse.send({
                     modelName: modelName,
-                    type: typeArray[thisIndex],
-                    name: dataArray[thisIndex],
+                    type: thisType,
+                    id: thisID,
+                    name: thisName,
                     remoteName: exoFileName,
                     remotePath: `${runDir}/`,
                     data: data}, eventName);

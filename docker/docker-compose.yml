@@ -1,11 +1,13 @@
 version: "3.3"
 services:
   backend:
-    build: .
+    build:
+      context: ".."
+      dockerfile: "docker/Dockerfile.cpu"
     tty: true
     container_name: "backend"
     volumes:
-      - ".:/usr/src/app"
+      - "..:/usr/src/app"
       - "/usr/src/app/node_modules"
     ports:
       - "3000:3000"
@@ -22,10 +24,12 @@ services:
     ipc: 'host'
     stdin_open: true
   modeler:
-    build: "../Plato3D"
+    build:
+      context: "../../Plato3D"
+      dockerfile: "docker/dev/Dockerfile"
     container_name: "modeler"
     volumes:
-      - "../Plato3D:/usr/src/app"
+      - "../../Plato3D:/usr/src/app"
       - "/usr/src/app/node_modules"
     ports:
       - "8080:8080"
@@ -33,4 +37,3 @@ services:
     image: mongo
     ports:
       - "27017:27017"
-

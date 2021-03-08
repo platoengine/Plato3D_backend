@@ -1,0 +1,25 @@
+FROM plato3d/plato-analyze:cpu-develop
+
+# To build, from the Plato3D_backend directory:
+# npm install
+# docker build -f docker/Dockerfile -t plato3d/plato-backend-cpu .
+
+RUN apt update; apt -y install paraview
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - ; apt-get install -y nodejs ; npm install nodemon
+
+RUN node -v
+RUN npm -v
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN [ ! -d "calculations" ] && mkdir calculations || true
+
+ENTRYPOINT [ "/bin/bash", "--rcfile", "/etc/profile", "-l", "-c" ]
+CMD [ "npm run start" ]
