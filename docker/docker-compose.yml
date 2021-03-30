@@ -26,7 +26,7 @@ services:
   modeler:
     build:
       context: "../../Plato3D"
-      dockerfile: "docker/dev/Dockerfile"
+      dockerfile: "docker/Dockerfile"
     container_name: "modeler"
     volumes:
       - "../../Plato3D:/usr/src/app"

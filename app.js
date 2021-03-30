@@ -20,10 +20,10 @@ app.use(require('./src/routes'));
 // below fixes a known bug in express-sse (see https://github.com/dpskvn/express-sse/issues/28)
 // express-sse version 0.5.3 exhibits this bug.
 // downgrading to 0.5.1 would fix it as well.
-app.use(function (req, res, next) {
-  res.flush = function () { /* Do nothing */ }
+app.use(function(req, res, next) {
+  res.flush = function() {/* Do nothing */};
   next();
-})
+});
 
 app.get('/stream', sse.init);
 
