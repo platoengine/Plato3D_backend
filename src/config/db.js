@@ -7,8 +7,8 @@ const mongoose = require('mongoose');
 // mongodb+srv://develop:Term!nat3d@cluster0.dycrh.mongodb.net/cluster0-shard-00-02.dycrh.mongodb.net:27017
 
 // use this line for local mongodb w/ container
-// const mongoDB = 'mongodb://mongo:27017/mongo-test';
-const mongoDB = 'mongodb+srv://develop:Term!nat3d@cluster0.dycrh.mongodb.net';
+const mongoDB = 'mongodb://mongo:27017/mongo-test';
+// const mongoDB = 'mongodb+srv://develop:Term!nat3d@cluster0.dycrh.mongodb.net';
 
 mongoose.connect(mongoDB, {useUnifiedTopology: true, useNewUrlParser: true});
 mongoose.Promise = global.Promise;

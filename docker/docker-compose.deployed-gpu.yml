@@ -1,12 +1,8 @@
 version: "3.3"
 services:
   backend:
-    build: .
+    image: plato3d/plato-backend-cc-7.5
     tty: true
-    container_name: "backend"
-    volumes:
-      - ".:/usr/src/app"
-      - "/usr/src/app/node_modules"
     ports:
       - "3000:3000"
     depends_on:
@@ -18,19 +14,13 @@ services:
       - OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
-    image: 'detectme'
     ipc: 'host'
     stdin_open: true
   modeler:
-    build: "../Plato3D"
-    container_name: "modeler"
-    volumes:
-      - "../Plato3D:/usr/src/app"
-      - "/usr/src/app/node_modules"
+    image: plato3d/plato-frontend
     ports:
-      - "8080:8080"
+      - "8080:80"
   mongo:
     image: mongo
     ports:
       - "27017:27017"
-

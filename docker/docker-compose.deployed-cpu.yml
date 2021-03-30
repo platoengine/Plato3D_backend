@@ -1,0 +1,23 @@
+version: "3.3"
+services:
+  backend:
+    image: plato3d/plato-backend-cpu
+    tty: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    privileged: true
+    environment:
+      - OMPI_ALLOW_RUN_AS_ROOT=1
+      - OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+    ipc: 'host'
+    stdin_open: true
+  modeler:
+    image: plato3d/plato-frontend
+    ports:
+      - "8080:80"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

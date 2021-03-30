@@ -1,0 +1,39 @@
+version: "3.3"
+services:
+  backend:
+    build:
+      context: ".."
+      dockerfile: "docker/Dockerfile.cpu"
+    tty: true
+    container_name: "backend"
+    volumes:
+      - "..:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    privileged: true
+    runtime: nvidia
+    environment:
+      - OMPI_ALLOW_RUN_AS_ROOT=1
+      - OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    image: 'detectme'
+    ipc: 'host'
+    stdin_open: true
+  modeler:
+    build:
+      context: "../../Plato3D"
+      dockerfile: "docker/Dockerfile"
+    container_name: "modeler"
+    volumes:
+      - "../../Plato3D:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    ports:
+      - "8080:8080"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

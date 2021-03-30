@@ -12,7 +12,7 @@
     "fix": "eslint --fix . --ext .js"
   },
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -25,7 +25,7 @@
     "http-proxy-middleware": "^1.0.6",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.4",
-    "mongoose": "^5.11.15",
+    "mongoose": "^5.11.18",
     "nodemon": "^2.0.7",
     "now": "^12.1.11",
     "npm-check": "^5.9.2",
@@ -38,8 +38,8 @@
     "xml-formatter": "^1.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.13",
-    "@babel/preset-env": "^7.12.13",
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "^7.13.9",
     "babel-jest": "^24.9.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.13.0",
