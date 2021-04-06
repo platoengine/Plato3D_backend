@@ -3,7 +3,7 @@ services:
   backend:
     build:
       context: ".."
-      dockerfile: "docker/Dockerfile.cpu"
+      dockerfile: "docker/Dockerfile.gpu"
     tty: true
     container_name: "backend"
     volumes:
