@@ -1,10 +1,10 @@
-const ScenePrimitivesModel = require('../../models/ScenePrimitives');
+const ProjectDataModel = require('../../models/ProjectData');
 const router = require('express').Router();
 
 router.post('/', function(req, res) {
   const {body: {username}} = req;
 
-  ScenePrimitivesModel.find({userid: username})
+  ProjectDataModel.find({userid: username})
       .sort({LastModified: -1})
       .exec(function(err, QueryResults) {
         if (err) {

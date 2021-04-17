@@ -16,17 +16,17 @@ const checkAuthentication = function(req, res, next) {
     if (err) {
       console.log(`bad token: ${err}`);
       res.status(401).json({Authenticated: false});
-    }
-    console.log(decodedToken);
-    console.log(req.body);
-    // console.log(decodedToken.username);
-    console.log(`username is ${username}`);
-    console.log(`token username is ${decodedToken.username}`);
-    console.log(username === decodedToken.username);
-    if (decodedToken.username !== username) {
-      console.log('invalid claim');
-      res.status(200).json({Authenticated: false});
-      return;
+    } else {
+      console.log(decodedToken);
+      console.log(req.body);
+      console.log(`username is ${username}`);
+      console.log(`token username is ${decodedToken.username}`);
+      console.log(username === decodedToken.username);
+      if (decodedToken.username !== username) {
+        console.log('invalid claim');
+        res.status(200).json({Authenticated: false});
+        return;
+      }
     }
     return next();
   });

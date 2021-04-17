@@ -44,10 +44,10 @@ router.post('/', function(req, res) {
             } else if (isMatch) {
               const newtoken = jwt.sign(
                   {username},
-                  JWTSecret, {expiresIn: '24h'}
+                  JWTSecret, {expiresIn: '24h'},
               );
               res.status(200).send(
-                  {token: newtoken, Authenticated: true}
+                  {token: newtoken, Authenticated: true},
               );
               console.log('User login successful');
             } else {

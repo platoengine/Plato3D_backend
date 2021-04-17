@@ -1,35 +1,35 @@
 const router = require('express').Router();
 const getUserTime = require('../../helpers/getUserTime');
-const ScenePrimitivesModel = require('../../models/ScenePrimitives');
+const ProjectDataModel = require('../../models/ProjectData');
 
 router.post('/', function(req, res) {
-  const {body: {sceneData, projectName, username}} = req;
+  const {body: {projectData, projectName, username}} = req;
   console.log(req.body);
-  console.log(`savescene project name: ${projectName}`);
+  console.log(`saveproject project name: ${projectName}`);
   userTime = getUserTime();
-  const UserScene = new ScenePrimitivesModel({
+  const UserProject = new ProjectDataModel({
     userid: username,
     projectname: projectName,
-    SceneHashmap: sceneData,
+    projectdata: projectData,
     LastModified: userTime,
     DateCreated: userTime});
-  console.log(UserScene);
-  UserScene.isProjectNameUnique(projectName, function(err, result) {
+  console.log(UserProject);
+  UserProject.isProjectNameUnique(projectName, function(err, result) {
     if (err) {
-      console.log('something went wrong');
+      console.log('saveProject failed');
       res.status(200).send(JSON.stringify({savestatus: false}));
     } else if (result == 0) {
-      UserScene.save();
+      UserProject.save();
       res.status(200).send(JSON.stringify({
         savestatus: true,
-        newproject: UserScene,
+        newproject: UserProject,
       }));
       console.log(result);
     } else {
       console.log('not unique');
       res.status(200).send(JSON.stringify({
         savestatus: false,
-        newproject: UserScene, unique: false,
+        newproject: UserProject, unique: false,
       }));
     }
   });

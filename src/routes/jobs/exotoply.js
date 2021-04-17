@@ -12,7 +12,8 @@ router.post('/', function(req, res) {
   const sourceFile = './exos/platomain.exo';
   const convert = spawn(
       'pvbatch',
-      ['--use-offscreen-rendering', extractIsoPath, sourceFile, destinationFile]
+      ['--use-offscreen-rendering',
+        extractIsoPath, sourceFile, destinationFile],
   );
 
   convert.stdout.on('data', (data) => {

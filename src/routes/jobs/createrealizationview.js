@@ -1,12 +1,11 @@
 const fs = require('fs'); // include file system module
 const router = require('express').Router();
-const runDir = './calculations/';
 const {sse} = require('../../config/serverSentEvent');
 const {spawn} = require('child_process');
 
 router.post('/', function(req, res) {
   const {body: {viewDefinition}} = req;
-  const {viewName, scriptName, realizationName} = viewDefinition;
+  const {viewName, runDir, scriptName, realizationName} = viewDefinition;
 
   const python = '/usr/bin/python';
   const scriptFileName = './scripts/' + scriptName;

@@ -1,0 +1,30 @@
+FROM plato3d/plato-analyze:cuda-10.2-cc-7.5-develop
+
+# To build, from the Plato3D_backend directory:
+# 1. npm install
+# 2. set the compute capability and branch of the base image above, e.g., cc-7.5-develop
+# 3. build the image using the correct compute capability in the image name, e.g.:
+#      docker build -f docker/Dockerfile.gpu -t plato3d/plato-backend-cc-7.5 .
+# 4. (optional) push/publish the updated image to hub.docker.com:
+#      sudo docker push plato3d/plato-backend-cc-7.5
+
+RUN apt update; apt -y install paraview
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - ; apt-get install -y nodejs ; npm install nodemon
+
+RUN node -v
+RUN npm -v
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
+RUN npm install pm2 -g
+
+COPY . .
+
+RUN [ ! -d "calculations" ] && mkdir calculations || true
+
+ENTRYPOINT [ "/bin/bash", "--rcfile", "/etc/profile", "-l", "-c" ]
+CMD [ "pm2-runtime npm -- start" ]

@@ -1,0 +1,36 @@
+# to use this compose file:
+#
+# 1.  select the image that corresponds to the compute capability of your hardware, cc-7.5, etc.
+# 2.  start the servers:
+#       docker-compose -f docker-compose.deployed-gpu.yml up
+#
+# Notes:
+#
+# 1.  you must have docker and nvidia-docker-2 installed
+#
+version: "3.3"
+services:
+  backend:
+    image: plato3d/plato-backend-cc-7.5
+    tty: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    privileged: true
+    runtime: nvidia
+    environment:
+      - OMPI_ALLOW_RUN_AS_ROOT=1
+      - OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    ipc: 'host'
+    stdin_open: true
+  modeler:
+    image: plato3d/plato-frontend
+    ports:
+      - "8080:80"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

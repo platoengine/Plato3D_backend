@@ -29,10 +29,10 @@ router.post('/', function(req, res) {
       registrationSuccess = true;
       const newtoken = jwt.sign(
           {username},
-          JWTSecret, {expiresIn: '24h'}
+          JWTSecret, {expiresIn: '24h'},
       );
       res.status(200).send(JSON.stringify(
-          {token: newtoken, Authenticated: true}
+          {token: newtoken, Authenticated: true},
       ));
       console.log('You have registered successfully');
     } else {
