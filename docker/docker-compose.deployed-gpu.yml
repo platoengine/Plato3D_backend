@@ -1,3 +1,13 @@
+# to use this compose file:
+#
+# 1.  select the image that corresponds to the compute capability of your hardware, cc-7.5, etc.
+# 2.  start the servers:
+#       docker-compose -f docker-compose.deployed-gpu.yml up
+#
+# Notes:
+#
+# 1.  you must have docker and nvidia-docker-2 installed
+#
 version: "3.3"
 services:
   backend:
