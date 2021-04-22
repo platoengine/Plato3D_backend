@@ -51,49 +51,52 @@ router.post('/', function(req, res) {
             optimizationName: optimizationName,
             iteration: iteration,
             data: fileData}, eventName);
-          //this block is expected to run after optimization completes
-          //TODO: Make sure that's the case
-          if (current == latest) {
-            //  reads directory content
-            const dirCont = fs.readdirSync( runDir );
-            let file = '';
-            for (const index in dirCont) {
-              if (dirCont[index].includes('diagnostics.txt')) {
-                file = dirCont[index];
-                break;
-              }
+
+          // send the convergence data
+          //
+
+          // find the *_diagnostics file
+          const dirCont = fs.readdirSync( runDir );
+          let file = '';
+          for (const index in dirCont) {
+            if (dirCont[index].includes('diagnostics.txt')) {
+              file = dirCont[index];
+              break;
             }
-            const conv = runDir+'/'+file;
-            const dat= fs.readFileSync(conv, {encoding: 'utf8'});
-            const event2 = 'convergencePlotData';
-            const arrayOfLines = dat.match(/[^\r\n]+/g);
-            let headerline = arrayOfLines[0].split(' ');
-            headerline = headerline.filter((item) => item);
-            const indexOfIter = headerline.indexOf('Iter');
-            const indexOfFX = headerline.indexOf('F(X)');
-            const fx_ = [];
-            const iter_ = [];
-            const plotData = {};
-            for (const index in arrayOfLines) {
-              if (index == 0) {
-                continue;
-              }
-              if (index == arrayOfLines.length-1) {
-                break;
-              }
-              let lineArray = arrayOfLines[index].split(' ');
-              lineArray = lineArray.filter((item) => item);
-              fx_.push(lineArray[indexOfFX]);
-              iter_.push(lineArray[indexOfIter]);
-            }
-            plotData['fx'] = fx_;
-            plotData['iter'] = iter_;
-            sse.send({
-              optimizationName: optimizationName,
-              data: plotData}, event2);
           }
+
+          // parse the diagnostics file
+          const conv = runDir+'/'+file;
+          const dat= fs.readFileSync(conv, {encoding: 'utf8'});
+          const plotDataEvent = 'convergencePlotData';
+          const arrayOfLines = dat.match(/[^\r\n]+/g);
+          let headerline = arrayOfLines[0].split(' ');
+          headerline = headerline.filter((item) => item);
+          const indexOfIter = headerline.indexOf('Iter');
+          const indexOfFX = headerline.indexOf('F(X)');
+          const fx_ = [];
+          const iter_ = [];
+          const plotData = {};
+          for (const index in arrayOfLines) {
+            if (index == 0) {
+              continue;
+            }
+            if (index == arrayOfLines.length-1) {
+              break;
+            }
+            let lineArray = arrayOfLines[index].split(' ');
+            lineArray = lineArray.filter((item) => item);
+            fx_.push(lineArray[indexOfFX]);
+            iter_.push(lineArray[indexOfIter]);
+          }
+          plotData['y'] = fx_;
+          plotData['x'] = iter_;
+          sse.send({
+            optimizationName: optimizationName,
+            data: plotData}, plotDataEvent);
         });
       });
+
       getData.stderr.on('data', (data) => {
         console.log(`stderr: ${data}`);
       });
