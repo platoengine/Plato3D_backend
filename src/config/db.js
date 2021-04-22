@@ -10,6 +10,12 @@ const mongoose = require('mongoose');
 const mongoDB = 'mongodb://mongo:27017/mongo-test';
 // const mongoDB = 'mongodb+srv://develop:Term!nat3d@cluster0.dycrh.mongodb.net';
 
+// this checks to see if the DATABASE_HOST environment variable is set, to e.g.:
+// "mongodb://mongo:27017/mongo-test"
+// and uses it if it is.
+// const mongoDB = process.env.DATABASE_HOST ? process.env.DATABASE_HOST : 'mongodb+srv://develop:Term!nat3d@cluster0.dycrh.mongodb.net';
+
+
 mongoose.connect(mongoDB, {useUnifiedTopology: true, useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 
