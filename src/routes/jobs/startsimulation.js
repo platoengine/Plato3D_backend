@@ -1,5 +1,7 @@
 const {spawn} = require('child_process');
 const router = require('express').Router();
+const {sse} = require('../../config/serverSentEvent');
+
 
 router.post('/', function(req, res) {
   const {body: {payload}} = req;
@@ -19,6 +21,7 @@ router.post('/', function(req, res) {
   } else {
     sim = spawn( exeName, exeArgs, {cwd: payload.runDir});
     console.log('Started simulation');
+    sse.send({}, 'simulationStarted');
     res.status(200).send('SUCCESS');
   }
   sim.stdout.on('data', (data) => {
@@ -26,6 +29,9 @@ router.post('/', function(req, res) {
   });
   sim.stderr.on('data', (data) => {
     console.log(`stdout: ${data}`);
+  });
+  sim.on('exit', function(code) {
+    sse.send({'name': payload.name, 'code': code}, 'simulationExited');
   });
 });
 
