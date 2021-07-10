@@ -1,0 +1,28 @@
+FROM plato3d/plato-analyze:cuda-10.2-cc-7.0-develop
+
+# From the Plato3D_backend directory:
+# 1. build the image:
+#      docker build -f docker/Dockerfile.cc-7.0 -t plato3d/plato-backend-cc-7.0 .
+# 2. (optional) push/publish the updated image to hub.docker.com:
+#      sudo docker push plato3d/plato-backend-cc-7.0
+
+RUN apt update; apt -y install paraview
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - ; apt-get install -y nodejs ; npm install nodemon
+
+RUN node -v
+RUN npm -v
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
+RUN npm install pm2 -g
+
+COPY . .
+
+RUN [ ! -d "calculations" ] && mkdir calculations || true
+
+ENTRYPOINT [ "/bin/bash", "--rcfile", "/etc/profile", "-l", "-c" ]
+CMD [ "pm2-runtime npm -- start" ]
