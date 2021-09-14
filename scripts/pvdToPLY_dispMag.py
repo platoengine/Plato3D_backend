@@ -21,13 +21,13 @@ stepspvdDisplay = Show(stepspvd, renderView1)
 # trace defaults for the display properties.
 stepspvdDisplay.Representation = 'Surface'
 stepspvdDisplay.ColorArrayName = [None, '']
-stepspvdDisplay.OSPRayScaleArray = 'displacements'
+stepspvdDisplay.OSPRayScaleArray = 'displacement'
 stepspvdDisplay.OSPRayScaleFunction = 'PiecewiseFunction'
-stepspvdDisplay.SelectOrientationVectors = 'displacements'
+stepspvdDisplay.SelectOrientationVectors = 'displacement'
 stepspvdDisplay.ScaleFactor = 0.9820216
-stepspvdDisplay.SelectScaleArray = 'displacements'
+stepspvdDisplay.SelectScaleArray = 'displacement'
 stepspvdDisplay.GlyphType = 'Arrow'
-stepspvdDisplay.GlyphTableIndexArray = 'displacements'
+stepspvdDisplay.GlyphTableIndexArray = 'displacement'
 stepspvdDisplay.DataAxesGrid = 'GridAxesRepresentation'
 stepspvdDisplay.PolarAxes = 'PolarAxesRepresentation'
 stepspvdDisplay.ScalarOpacityUnitDistance = 0.2979253174897762
@@ -46,13 +46,13 @@ extractSurface1Display = Show(extractSurface1, renderView1)
 # trace defaults for the display properties.
 extractSurface1Display.Representation = 'Surface'
 extractSurface1Display.ColorArrayName = [None, '']
-extractSurface1Display.OSPRayScaleArray = 'displacements'
+extractSurface1Display.OSPRayScaleArray = 'displacement'
 extractSurface1Display.OSPRayScaleFunction = 'PiecewiseFunction'
-extractSurface1Display.SelectOrientationVectors = 'displacements'
+extractSurface1Display.SelectOrientationVectors = 'displacement'
 extractSurface1Display.ScaleFactor = 0.9820216
-extractSurface1Display.SelectScaleArray = 'displacements'
+extractSurface1Display.SelectScaleArray = 'displacement'
 extractSurface1Display.GlyphType = 'Arrow'
-extractSurface1Display.GlyphTableIndexArray = 'displacements'
+extractSurface1Display.GlyphTableIndexArray = 'displacement'
 extractSurface1Display.DataAxesGrid = 'GridAxesRepresentation'
 extractSurface1Display.PolarAxes = 'PolarAxesRepresentation'
 
@@ -63,7 +63,7 @@ Hide(stepspvd, renderView1)
 renderView1.Update()
 
 # set scalar coloring
-ColorBy(extractSurface1Display, ('POINTS', 'displacements', 'Magnitude'))
+ColorBy(extractSurface1Display, ('POINTS', 'displacement', 'Magnitude'))
 
 # rescale color and/or opacity maps used to include current data range
 extractSurface1Display.RescaleTransferFunctionToDataRange(True, False)
@@ -71,11 +71,11 @@ extractSurface1Display.RescaleTransferFunctionToDataRange(True, False)
 # show color bar/color legend
 extractSurface1Display.SetScalarBarVisibility(renderView1, True)
 
-# get color transfer function/color map for 'displacements'
-displacementsLUT = GetColorTransferFunction('displacements')
+# get color transfer function/color map for 'displacement'
+displacementsLUT = GetColorTransferFunction('displacement')
 
 # set scalar coloring
-ColorBy(extractSurface1Display, ('POINTS', 'displacements', 'Magnitude'))
+ColorBy(extractSurface1Display, ('POINTS', 'displacement', 'Magnitude'))
 
 # rescale color and/or opacity maps used to exactly fit the current data range
 extractSurface1Display.RescaleTransferFunctionToDataRange(False, False)
@@ -88,7 +88,7 @@ extractSurface1Display.MapScalars = 0
 
 # save data
 SaveData(outFileName, proxy=extractSurface1, FileType='Ascii', EnableColoring=1,
-    ColorArrayName=['POINTS', 'displacements'],
+    ColorArrayName=['POINTS', 'displacement'],
     LookupTable=displacementsLUT)
 
 #### saving camera placements for all active views
