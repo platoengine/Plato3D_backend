@@ -29,7 +29,7 @@ services:
   modeler:
     image: plato3d/plato-frontend
     ports:
-      - "8080:80"
+      - "8080:8080"
   mongo:
     image: mongo
     ports:
