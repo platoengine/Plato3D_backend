@@ -36,7 +36,18 @@ router.post('/', function(req, res) {
   });
 
   sim.on('exit', function(code) {
+    // send exit notification
     sse.send({'name': payload.name, 'code': code}, 'optimizationExited');
+
+    // send final objective results
+    const terminalLogFile = `${payload.runDir}/terminal.log`;
+    fs.readFile( terminalLogFile, 'utf-8', function(err, fileData) {
+      if (err) {
+        console.log(`failed to read console. Error: ${err}`);
+      }
+      const eventName = 'resultsData';
+      sse.send({'name': payload.name, 'data': fileData}, eventName);
+    });
   });
 
   res.status(200).send('started');

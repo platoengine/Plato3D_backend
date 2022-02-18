@@ -41,7 +41,7 @@ router.post('/', function(req, res) {
 
   // write go.sh
   let goScript = '#!/bin/bash \n';
-  goScript += 'source mpirun.source';
+  goScript += 'source mpirun.source |& tee terminal.log';
   const goScriptFileName = `${runDir}/go.sh`;
   fs.writeFile(goScriptFileName, goScript, (err) => {
     if (err) {
