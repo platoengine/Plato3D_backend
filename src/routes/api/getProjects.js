@@ -10,7 +10,7 @@ router.post('/', function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          console.log(QueryResults);
+          console.log(`readProjects query: ${QueryResults}`);
           res.status(200).send(QueryResults);
         }
       });
