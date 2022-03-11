@@ -26,6 +26,7 @@ router.post('/', function(req, res) {
     } else {
       // create a user instance for the data that is currently
       // stored in the database
+      console.log(`userdata: ${userdata}`);
       const storedUserData = new User({username: userdata[0].username,
         password: userdata[0].password,
         email: userdata[0].email,

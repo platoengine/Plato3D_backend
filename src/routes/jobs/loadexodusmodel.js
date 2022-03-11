@@ -15,9 +15,12 @@ router.post('/', function(req, res) {
     strData = `${data}`;
     entries = strData.split('\n').filter( (e) => e !== '' );
     typeArray = entries.map( (e) => e.split(':')[0] );
-    dataArray = entries.map( (e) => e.split(':')[1] );
+    idArray = entries.map( (e) => e.split(':')[1] );
+    dataArray = entries.map( (e) => e.split(':')[2] );
     for (iData=0; iData<entries.length; iData++) {
-      const thisIndex = iData;
+      const thisType = typeArray[iData];
+      const thisID = idArray[iData];
+      const thisName = dataArray[iData];
       fs.readFile( dataArray[iData], 'utf-8', function(err, data) {
         if (err) {
           console.log(`read error: ${err}`);
@@ -25,8 +28,9 @@ router.post('/', function(req, res) {
         console.log(`read success. sending`);
         sse.send({
           modelName: modelName,
-          type: typeArray[thisIndex],
-          name: dataArray[thisIndex],
+          type: thisType,
+          id: thisID,
+          name: thisName,
           remoteName: exoFileName,
           remotePath: exoFilePath,
           data: data}, eventName);
